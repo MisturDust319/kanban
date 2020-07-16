@@ -6,17 +6,18 @@ const List = ({title, cards}) => {
     return (
         <div style={styles.container}>
             <h3>{ title }</h3>
-            <Card title="my card"/>
+            { cards.map(card => <Card key={ card.id } text={ card.text } title={ card.title } />)}
         </div>
     );
 }
 
 const styles={
     container: {
-      backgroundColor: "#ccc",
+      backgroundColor: '#dfe3e6',
       borderRadius: 3,
       width: 300,
-      padding: 8
+      padding: 8,
+      marginRight: 8
     }
   }
   
