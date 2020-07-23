@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import TextArea from 'react-textarea-autosize';
 
@@ -20,7 +21,7 @@ class AddActionButton extends React.Component {
         return (
             <div onClick={ this.openForm }
             style={{
-                ...styles.openForButtonGroup,
+                ...styles.openFormButtonGroup,
                 opacity: buttonTextOpacity,
                 color: buttonTextColor,
                 backgroundColor: buttonTextBackground
@@ -80,6 +81,12 @@ class AddActionButton extends React.Component {
                     autoFocus
                 /> 
             </Card>
+            <div style={ styles.formButtonGroup }>
+                <Button variant='contained' style={{color: 'white', backgroundColor: '#5aac44'}}>
+                    { buttonTitle }{' '}
+                </Button>
+                <Icon style={{ marginLeft: 8, cursor: 'pointer' }}>close</Icon>
+            </div>
         </div>;
     }
 
@@ -89,7 +96,7 @@ class AddActionButton extends React.Component {
 }
 
 const styles = {
-    openForButtonGroup: {
+    openFormButtonGroup: {
         display: 'flex',
         alignItems: 'center',
         cursor: 'pointer',
@@ -97,6 +104,11 @@ const styles = {
         height: 36,
         width: 272,
         paddingLeft: 10,
+    },
+    formButtonGroup: {
+        marginTop: 8,
+        display: 'flex',
+        alignItems: 'center',
     }
 }
 
