@@ -17,6 +17,7 @@ const styles={
     container: {
       backgroundColor: '#dfe3e6',
       borderRadius: 3,
+      height: '100%',
       width: 300,
       padding: 8,
       marginRight: 8
