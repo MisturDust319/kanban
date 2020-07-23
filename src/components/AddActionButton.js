@@ -1,5 +1,7 @@
 import React from 'react';
+import Card from '@material-ui/core/Card';
 import Icon from '@material-ui/core/Icon';
+import TextArea from 'react-textarea-autosize';
 
 class AddActionButton extends React.Component {
 
@@ -41,6 +43,12 @@ class AddActionButton extends React.Component {
         })
     }
 
+    handleInputChange = e => {
+        this.setState({
+            text: e.target.text
+        })
+    }
+
     renderForm = () => {
         const { list } = this.props;
         
@@ -50,7 +58,29 @@ class AddActionButton extends React.Component {
 
         const buttonTitle = list ? 'Add list' : 'Add card';
 
-        return <p>Hello</p>;
+        return <div>
+            <Card style={{
+                overflow: 'visible',
+                minHeight: 80,
+                minWidth: 272,
+                padding: '6px 8px 2px'
+            }}>
+                <TextArea  
+                    placeholder={ placeHolder }
+                    value={ this.state.text }
+                    onChange={ this.handleInputChange }
+                    onBlur={ this.closeForm }
+                    style={{
+                        resize: 'none',
+                        width: '100%',
+                        overflow: 'hidden',
+                        outline: 'none',
+                        border: 'none',
+                    }}
+                    autoFocus
+                /> 
+            </Card>
+        </div>;
     }
 
     render() {
