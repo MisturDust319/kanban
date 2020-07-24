@@ -1,13 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import TextArea from 'react-textarea-autosize';
 
+import { addList } from '../actions';
+
 class AddActionButton extends React.Component {
 
     state = {
         formOpen: false,
+        text: ''
     }
 
     renderAddButton = () => {
@@ -46,8 +50,19 @@ class AddActionButton extends React.Component {
 
     handleInputChange = e => {
         this.setState({
-            text: e.target.text
+            text: e.target.value
         })
+    }
+
+    handleAddList = () => {
+        const { dispatch } = this.props;
+        const { text } = this.state;
+        
+        if(text) {
+            dispatch(addList(text))
+        }
+
+        return;
     }
 
     renderForm = () => {
@@ -82,7 +97,11 @@ class AddActionButton extends React.Component {
                 /> 
             </Card>
             <div style={ styles.formButtonGroup }>
-                <Button variant='contained' style={{color: 'white', backgroundColor: '#5aac44'}}>
+                <Button
+                    onMouseDown={ this.handleAddList }
+                    variant='contained'
+                    style={{color: 'white', backgroundColor: '#5aac44'}}
+                >
                     { buttonTitle }{' '}
                 </Button>
                 <Icon style={{ marginLeft: 8, cursor: 'pointer' }}>close</Icon>
@@ -112,4 +131,4 @@ const styles = {
     }
 }
 
-export default AddActionButton
+export default connect()(AddActionButton);
