@@ -11,7 +11,7 @@ const App = (props) => {
     <div className="App">
       <h4>Test</h4>
       <div style={styles.listContainer}>
-        { lists.map(list => <List key={ list.id } title={ list.title} cards={list.cards} />) }
+        { lists.map(list => <List key={ list.id } listID={ list.id } title={ list.title} cards={list.cards} />) }
       <AddActionButton list/>
       </div>
     </div>

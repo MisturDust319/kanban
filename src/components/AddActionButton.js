@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import TextArea from 'react-textarea-autosize';
 
-import { addList } from '../actions';
+import { addList, addCard } from '../actions';
 
 class AddActionButton extends React.Component {
 
@@ -65,6 +65,17 @@ class AddActionButton extends React.Component {
         return;
     }
 
+    handleAddCard = () => {
+        const { listID, dispatch } = this.props;
+        const { text } = this.state;
+
+        if(text) {
+            dispatch(addCard(listID, text));
+        }
+
+        return;
+    }
+
     renderForm = () => {
         const { list } = this.props;
         
@@ -98,7 +109,7 @@ class AddActionButton extends React.Component {
             </Card>
             <div style={ styles.formButtonGroup }>
                 <Button
-                    onMouseDown={ this.handleAddList }
+                    onMouseDown={ list ? this.handleAddList : this.handleAddCard }
                     variant='contained'
                     style={{color: 'white', backgroundColor: '#5aac44'}}
                 >

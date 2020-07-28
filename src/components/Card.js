@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography'
 
-const TrelloCard = ({text}) => {
+const TrelloCard = ({listID, text}) => {
     return (
         <Card style={ styles.cardContainer }>
             <CardContent>

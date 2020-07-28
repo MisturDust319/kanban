@@ -3,12 +3,17 @@ import React from 'react';
 import Card from './Card';
 import AddActionButton from './AddActionButton';
 
-const List = ({title, cards}) => {
+const List = ({listID, title, cards}) => {
     return (
         <div style={styles.container}>
             <h3>{ title }</h3>
-            { cards.map(card => <Card key={ card.id } text={ card.text } title={ card.title } />)}
-          <AddActionButton />
+            { cards.map(card => <Card
+              listID={ listID }
+              key={ card.id }
+              text={ card.text }
+              title={ card.title }
+            />)}
+          <AddActionButton listID={ listID }/>
         </div>
     );
 }
