@@ -50,7 +50,7 @@ const listsReducer = (state = initialState, action) => {
 
             listID++;
             return [...state, newList];
-        case CONSTANTS.ADD_CARD:
+        case CONSTANTS.ADD_CARD: {
             const newCard = {
                 text: action.payload.text,
                 id: `card-${cardID}`
@@ -67,6 +67,41 @@ const listsReducer = (state = initialState, action) => {
                     return list;
                 }
             });
+
+            return newState;
+        }
+
+        case CONSTANTS.DRAG_HAPPENED:
+            // copy state object
+            const newState = [...state];
+            // extract the information for drag and drop from the action
+            const {
+                droppableIdStart,
+                droppableIdEnd,
+                droppableIndexStart,
+                droppableIndexEnd,
+                draggableId
+            } = action.payload;
+
+            // when the droppable id is the same
+            // for the beginning and the end of the gesture,
+            // the card is being moved within the same list
+            if(droppableIdStart === droppableIdEnd) {
+                // copy the actual list object in the app state
+                // this is done by using the find operation
+                // and searching for the ID of the current droppable id
+                // (which is the id of the appropriate list)
+                const list = state.find(list => droppableIdStart === list.id);
+                
+                // NOTE: we use splice because it is faster than the spread opreation, or at least used to be 
+                // use the splice operation to do two things:
+                // 1. grab the specific card (the return value of splice is a list of deleted values)
+                // we only delete the first element found
+                // 2. remove the card from the list so that it can be repositioned
+                const card = list.cards.splice(droppableIndexStart, 1);
+                // add in card at the drop index
+                list.cards.splice(droppableIndexEnd, 0, ...card);
+            }
 
             return newState;
         default:
