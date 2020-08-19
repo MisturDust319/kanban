@@ -1,17 +1,26 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
 import Card from './Card';
 import AddActionButton from './AddActionButton';
+
+const ListContainer = styled.div`
+  background-color: #dfe3e6;
+  border-radius: 3px;
+  width: 300;
+  padding: 8px;
+  height: 100%;
+  margin-right: 8px;
+`
 
 const List = ({listID, title, cards}) => {
     return (
       <Droppable droppableId={ String(listID) } >
         { provided => (
-            <div
+            <ListContainer
               {...provided.droppableProps }
               ref={ provided.innerRef }
-              style={styles.container}
             >
               <h4>{ title }</h4>
               { cards.map((card, index) =>
@@ -24,23 +33,11 @@ const List = ({listID, title, cards}) => {
               
               { provided.placeholder }
               <AddActionButton listID={ listID }/>
-            </div>
+            </ListContainer>
           )
         }
       </Droppable>
     );
 }
-
-const styles={
-    container: {
-      backgroundColor: '#dfe3e6',
-      borderRadius: 3,
-      height: '100%',
-      width: 300,
-      padding: 8,
-      marginRight: 8
-    }
-  }
-  
 
 export default List;
