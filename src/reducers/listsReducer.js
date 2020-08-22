@@ -91,7 +91,7 @@ const listsReducer = (state = initialState, action) => {
                 // this is done by using the find operation
                 // and searching for the ID of the current droppable id
                 // (which is the id of the appropriate list)
-                const list = state.find(list => droppableIdStart === list.id);
+                const list = newState.find(list => droppableIdStart === list.id);
                 
                 // NOTE: we use splice because it is faster than the spread opreation, or at least used to be 
                 // use the splice operation to do two things:
@@ -104,12 +104,12 @@ const listsReducer = (state = initialState, action) => {
             }
             else if(droppableIdStart !== droppableIdEnd) {
                 // find the list where the card started...
-                const listStart = state.find(list => droppableIdStart === list.id);
+                const listStart = newState.find(list => droppableIdStart === list.id);
                 // then remove the card from that list
                 const card = listStart.cards.splice(droppableIndexStart, 1);
 
                 // then, find the card where the 
-                const listEnd = state.find(list => droppableIdEnd === list.id);                
+                const listEnd = newState.find(list => droppableIdEnd === list.id);                
                 
                 listEnd.cards.splice(droppableIndexEnd, 0, ...card);
             }
