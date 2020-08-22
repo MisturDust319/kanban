@@ -102,6 +102,17 @@ const listsReducer = (state = initialState, action) => {
                 // add in card at the drop index
                 list.cards.splice(droppableIndexEnd, 0, ...card);
             }
+            else if(droppableIdStart !== droppableIdEnd) {
+                // find the list where the card started...
+                const listStart = state.find(list => droppableIdStart === list.id);
+                // then remove the card from that list
+                const card = listStart.cards.splice(droppableIndexStart, 1);
+
+                // then, find the card where the 
+                const listEnd = state.find(list => droppableIdEnd === list.id);                
+                
+                listEnd.cards.splice(droppableIndexEnd, 0, ...card);
+            }
 
             return newState;
         default:
