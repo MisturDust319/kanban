@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import List from './List';
@@ -17,7 +17,7 @@ const App = (props) => {
   const { lists } = props;
 
   const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
     // destination: an object that houses other props
     //  notably a prop, drappableID, the ID of the container where the dragged item lands
     //  also an index prop
@@ -35,7 +35,8 @@ const App = (props) => {
       destination.droppableId,
       source.index,
       destination.index,
-      draggableId
+      draggableId,
+      type
     ));
   }
 
@@ -43,16 +44,23 @@ const App = (props) => {
     <DragDropContext onDragEnd={ onDragEnd }>
       <div className="App">
         <h4>Test</h4>
-        <ListContainer>
-          { lists.map(list => 
-            <List key={ list.id }
-              listID={ list.id }
-              title={ list.title}
-              cards={list.cards}
-            />) 
-          }
-          <AddActionButton list/>
-        </ListContainer>
+        <Droppable droppableId={"all-lists"} direction="horizontal" type="list">
+          { provided => (
+            <ListContainer { ...provided.droppableProps }
+            ref={ provided.innerRef }
+            >
+              { lists.map((list, index) => 
+                <List key={ list.id }
+                  listID={ list.id }
+                  index={ index }
+                  title={ list.title}
+                  cards={list.cards}
+                />) 
+              }
+              <AddActionButton list/>
+            </ListContainer>
+          )}          
+        </Droppable>
       </div>
     </DragDropContext>
   );

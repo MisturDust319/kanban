@@ -1,5 +1,5 @@
 import React from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 
 import Card from './Card';
@@ -14,29 +14,37 @@ const ListContainer = styled.div`
   margin-right: 8px;
 `
 
-const List = ({listID, title, cards}) => {
+const List = ({listID, index, title, cards}) => {
     return (
-      <Droppable droppableId={ String(listID) } >
+      <Draggable draggableId={ String(listID) } index={ String(index) }>
         { provided => (
-            <ListContainer
-              {...provided.droppableProps }
-              ref={ provided.innerRef }
-            >
-              <h4>{ title }</h4>
-              { cards.map((card, index) =>
-                <Card
-                  id={ card.id }
-                  key={ card.id }
-                  index={ index }
-                  text={ card.text }
-              />)}
-              
-              { provided.placeholder }
-              <AddActionButton listID={ listID }/>
-            </ListContainer>
-          )
-        }
-      </Droppable>
+          <ListContainer
+            ref={ provided.innerRef }
+            {...provided.dragHandleProps }
+            {...provided.draggableProps}
+          >
+            <Droppable droppableId={ String(listID) }>
+              { provided => (
+                  <div ref={ provided.innerRef }
+                  { ...provided.droppableProps }>
+                    <h4>{ title }</h4>
+                    { cards.map((card, index) =>
+                      <Card
+                        id={ card.id }
+                        key={ card.id }
+                        index={ index }
+                        text={ card.text }
+                    />)}
+                    
+                    { provided.placeholder }
+                    <AddActionButton listID={ listID }/>
+                  </div>
+                )
+              }
+            </Droppable>
+          </ListContainer>
+        ) }        
+      </Draggable>
     );
 }
 

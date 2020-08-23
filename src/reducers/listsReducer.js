@@ -80,8 +80,17 @@ const listsReducer = (state = initialState, action) => {
                 droppableIdEnd,
                 droppableIndexStart,
                 droppableIndexEnd,
-                draggableId
+                draggableId,
+                type
             } = action.payload;
+
+            // check if we are dragging a card or a list
+            if(type === "list") {
+                const list = newState.splice(droppableIndexStart, 1);
+                newState.splice(droppableIndexEnd, 0, ...list);
+
+                return newState;
+            }
 
             // when the droppable id is the same
             // for the beginning and the end of the gesture,
